@@ -30,4 +30,17 @@ class ProductDataSource {
       return const Left('error add product');
     }
   }
+
+    Future<Either<String, List<ProductResponseModel>>> getPaginationProduct(
+      {required offset, required limit}) async {
+    final response = await http.get(
+      Uri.parse('https://api.escuelajs.co/api/v1/products?offset=$offset&limit=$limit'),
+    );
+    if (response.statusCode == 200) {
+      return Right(List<ProductResponseModel>.from(jsonDecode(response.body)
+          .map((x) => ProductResponseModel.fromMap(x))).toList());
+    } else {
+      return const Left('get product error');
+    }
+  }
 }
