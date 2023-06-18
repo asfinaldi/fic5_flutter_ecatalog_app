@@ -39,12 +39,24 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
           //     data: [...currentState.data, ...result],
           //     offset: currentState.offset + 50,
           //     isNext: isNext));
-              emit(currentState.copyWith(
+          emit(currentState.copyWith(
               data: [...currentState.data, ...result],
               offset: currentState.offset + 50,
               isNext: isNext));
         },
       );
+    });
+
+    on<AddSingleProductsEvent>((event, emit) async {
+      final currentState = state as ProductsLoaded;
+
+      emit(currentState.copyWith(
+        data: [...currentState.data, event.data],
+      ));
+    });
+
+    on<ClearProductsEvent>((event, emit) async {
+      emit(ProductsInitial());
     });
   }
 }

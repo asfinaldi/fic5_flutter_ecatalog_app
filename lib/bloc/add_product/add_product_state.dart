@@ -16,7 +16,7 @@ class AddProductLoaded extends AddProductState {
 
 class AddProductError extends AddProductState {
   final String message;
-  AddProductError({
+   AddProductError({
     required this.message,
   });
 }

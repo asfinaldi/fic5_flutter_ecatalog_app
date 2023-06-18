@@ -50,6 +50,11 @@ class ProductResponseModel {
         "updatedAt": updatedAt?.toIso8601String(),
         "category": category?.toMap(),
     };
+
+  @override
+  String toString() {
+    return 'ProductResponseModel(id: $id, title: $title, price: $price, description: $description, images: $images, creationAt: $creationAt, updatedAt: $updatedAt, category: $category)';
+  }
 }
 
 class Category {
