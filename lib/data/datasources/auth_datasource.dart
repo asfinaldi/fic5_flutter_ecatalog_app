@@ -17,7 +17,7 @@ class AuthDatasource {
     );
 
     if (response.statusCode == 201) {
-      return Right(RegisterResponseModel.fromJson(response.body));
+      return Right(RegisterResponseModel.fromJson(jsonDecode(response.body)));
     } else {
       return const Left('Register Gagal');
     }

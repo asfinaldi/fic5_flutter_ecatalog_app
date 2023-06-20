@@ -318,6 +318,8 @@ abstract class _$$_LoadedCopyWith<$Res> {
       __$$_LoadedCopyWithImpl<$Res>;
   @useResult
   $Res call({RegisterResponseModel model});
+
+  $RegisterResponseModelCopyWith<$Res> get model;
 }
 
 /// @nodoc
@@ -338,6 +340,14 @@ class __$$_LoadedCopyWithImpl<$Res>
           : model // ignore: cast_nullable_to_non_nullable
               as RegisterResponseModel,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $RegisterResponseModelCopyWith<$Res> get model {
+    return $RegisterResponseModelCopyWith<$Res>(_value.model, (value) {
+      return _then(_value.copyWith(model: value));
+    });
   }
 }
 

@@ -85,7 +85,32 @@ class _HomePageState extends State<HomePage> {
                     child: ListTile(
                       title: Text(
                           state.data.reversed.toList()[index].title ?? '-'),
-                      subtitle: Text('${state.data[index].price}\$'),
+                      // subtitle: Text('${state.data[index].price}\$'),
+                      subtitle: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            state.data[index].description ?? '-',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                fontSize: 12, color: Colors.black),
+                          ),
+                          Text(
+                            "\$${state.data[index].price} ",
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                                color: Colors.red),
+                          )
+                        ],
+                      ),
+                      leading: CircleAvatar(
+                        backgroundImage: NetworkImage(
+                          '${state.data[index].images}',
+                        ),
+                      ),
                     ),
                   );
                 },

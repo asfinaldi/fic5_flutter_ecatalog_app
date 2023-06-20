@@ -2,58 +2,26 @@
 //
 //     final registerResponseModel = registerResponseModelFromMap(jsonString);
 
+import 'package:meta/meta.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:convert';
 
-class RegisterResponseModel {
-  String? email;
-  String? password;
-  String? name;
-  String? avatar;
-  String? role;
-  int? id;
-  DateTime? creationAt;
-  DateTime? updatedAt;
+part 'register_response_model.freezed.dart';
+part 'register_response_model.g.dart';
 
-  RegisterResponseModel({
-    this.email,
-    this.password,
-    this.name,
-    this.avatar,
-    this.role,
-    this.id,
-    this.creationAt,
-    this.updatedAt,
-  });
+@freezed
+class RegisterResponseModel with _$RegisterResponseModel {
+  const factory RegisterResponseModel({
+    required String email,
+    required String password,
+    required String name,
+    required String avatar,
+    required String role,
+    required int id,
+    required DateTime creationAt,
+    required DateTime updatedAt,
+  }) = _RegisterResponseModel;
 
-  factory RegisterResponseModel.fromJson(String str) =>
-      RegisterResponseModel.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
-
-  factory RegisterResponseModel.fromMap(Map<String, dynamic> json) =>
-      RegisterResponseModel(
-        email: json["email"],
-        password: json["password"],
-        name: json["name"],
-        avatar: json["avatar"],
-        role: json["role"],
-        id: json["id"],
-        creationAt: json["creationAt"] == null
-            ? null
-            : DateTime.parse(json["creationAt"]),
-        updatedAt: json["updatedAt"] == null
-            ? null
-            : DateTime.parse(json["updatedAt"]),
-      );
-
-  Map<String, dynamic> toMap() => {
-        "email": email,
-        "password": password,
-        "name": name,
-        "avatar": avatar,
-        "role": role,
-        "id": id,
-        "creationAt": creationAt?.toIso8601String(),
-        "updatedAt": updatedAt?.toIso8601String(),
-      };
+  factory RegisterResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$RegisterResponseModelFromJson(json);
 }
