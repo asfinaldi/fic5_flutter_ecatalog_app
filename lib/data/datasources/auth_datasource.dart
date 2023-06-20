@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter_ecatalog/data/models/request/login_request_model.dart';
 import 'package:flutter_ecatalog/data/models/request/register_request_model.dart';
@@ -9,9 +11,10 @@ class AuthDatasource {
   Future<Either<String, RegisterResponseModel>> register(
       RegisterRequestModel model) async {
     final response = await http.post(
-        Uri.parse('https://api.escuelajs.co/api/v1/users/'),
-        body: model.toJson(),
-        headers: {'Content-Type': 'application/json'});
+      Uri.parse('https://api.escuelajs.co/api/v1/users/'),
+      body: model.toJson(),
+      headers: {'Content-Type': 'application/json'},
+    );
 
     if (response.statusCode == 201) {
       return Right(RegisterResponseModel.fromJson(response.body));
@@ -23,12 +26,13 @@ class AuthDatasource {
   Future<Either<String, LoginResponseModel>> login(
       LoginRequestModel model) async {
     final response = await http.post(
-        Uri.parse('https://api.escuelajs.co/api/v1/auth/login'),
-        body: model.toJson(),
-        headers: {'Content-Type': 'application/json'});
+      Uri.parse('https://api.escuelajs.co/api/v1/auth/login'),
+      body: model.toJson(),
+      //headers: {'Content-Type': 'application/json'},
+    );
 
     if (response.statusCode == 201) {
-      return Right(LoginResponseModel.fromJson(response.body));
+      return Right(LoginResponseModel.fromJson(jsonDecode(response.body)));
     } else {
       return const Left('Login Gagal');
     }

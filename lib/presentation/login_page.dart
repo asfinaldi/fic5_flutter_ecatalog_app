@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecatalog/bloc/login_cubit/login_cubit.dart';
 import 'package:flutter_ecatalog/data/datasources/local_datasource.dart';
 import 'package:flutter_ecatalog/data/models/request/login_request_model.dart';
 import 'package:flutter_ecatalog/presentation/home_page.dart';
 import 'package:flutter_ecatalog/presentation/register_page.dart';
 
-import '../bloc/login/login_bloc.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -72,42 +72,44 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(
               height: 16,
             ),
-            BlocConsumer<LoginBloc, LoginState>(
+            BlocConsumer<LoginCubit, LoginState>(
+              listener: (context, state) {
+                state.maybeWhen(
+                  error: (message) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(message),
+                      backgroundColor: Colors.red,
+                    ));
+                  },
+                  loaded: (model) {
+                    LocalDataSource().saveToken(model.accessToken);
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('Login Success'),
+                      backgroundColor: Colors.blue,
+                    ));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return const HomePage();
+                    }));
+                  },
+                  orElse: () {},
+                );
+              },
               builder: (context, state) {
-                if (state is LoginLoading) {
+                return state.maybeWhen(orElse: () {
+                  return ElevatedButton(
+                      onPressed: () {
+                        final requestModel = LoginRequestModel(
+                            email: emailController!.text,
+                            password: passwordController!.text);
+                        context.read<LoginCubit>().login(requestModel);
+                      },
+                      child: const Text('Login'));
+                }, loading: () {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                }
-                return ElevatedButton(
-                    onPressed: () {
-                      final requestModel = LoginRequestModel(
-                          email: emailController!.text,
-                          password: passwordController!.text);
-                      context.read<LoginBloc>().add(
-                            DoLoginEvent(model: requestModel),
-                          );
-                    },
-                    child: const Text('Login'));
-              },
-              listener: (context, state) {
-                if (state is LoginError) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(state.message),
-                    backgroundColor: Colors.red,
-                  ));
-                }
-
-                if (state is LoginLoaded) {
-                  LocalDataSource().saveToken(state.model.accessToken);
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('Login Success'),
-                    backgroundColor: Colors.blue,
-                  ));
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return const HomePage();
-                  }));
-                }
+                });
               },
             ),
             const SizedBox(

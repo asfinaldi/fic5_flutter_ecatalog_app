@@ -1,11 +1,4 @@
-// To parse this JSON data, do
-//
-//     final productRequestModel = productRequestModelFromMap(jsonString);
-
 import 'dart:convert';
-
-import 'package:meta/meta.dart';
-
 class ProductRequestModel {
   final String title;
   final int price;

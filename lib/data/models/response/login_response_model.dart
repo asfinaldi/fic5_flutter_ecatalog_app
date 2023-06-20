@@ -1,29 +1,25 @@
+// To parse this JSON data, do
+//
+//     final loginResponseModel = loginResponseModelFromMap(jsonString);
+
+import 'package:meta/meta.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:convert';
 
-class LoginResponseModel {
-  final String accessToken;
-  final String refreshToken;
-  LoginResponseModel({
-    required this.accessToken,
-    required this.refreshToken,
-  });
+part 'login_response_model.freezed.dart';
+part 'login_response_model.g.dart';
 
-  Map<String, dynamic> toMap() {
-    return {
-      'accessToken': accessToken,
-      'refreshToken': refreshToken,
-    };
-  }
+@freezed
+class LoginResponseModel with _$LoginResponseModel {
+    const factory LoginResponseModel({
+        required String accessToken,
+        required String refreshToken,
+    }) = _LoginResponseModel;
 
-  factory LoginResponseModel.fromMap(Map<String, dynamic> map) {
-    return LoginResponseModel(
-      accessToken: map['access_token'] ?? '',
-      refreshToken: map['refresh_token'] ?? '',
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory LoginResponseModel.fromJson(String source) =>
-      LoginResponseModel.fromMap(json.decode(source));
+    factory LoginResponseModel.fromJson(Map<String, dynamic> json) => _$LoginResponseModelFromJson(json);
 }
+
+
+    //   accessToken: map['access_token'] ?? '',
+    //   refreshToken: map['refresh_token'] ?? '',
+    // );

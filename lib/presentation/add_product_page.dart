@@ -1,12 +1,8 @@
 import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_ecatalog/bloc/add_product/add_product_bloc.dart';
 import 'package:flutter_ecatalog/bloc/product_update/product_update_cubit.dart';
-import 'package:flutter_ecatalog/bloc/products/products_bloc.dart';
-import 'package:flutter_ecatalog/bloc/update_product/update_product_bloc.dart';
 import 'package:flutter_ecatalog/data/models/request/product_request_model.dart';
 import 'package:flutter_ecatalog/presentation/camera_page.dart';
 import 'package:image_picker/image_picker.dart';

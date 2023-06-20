@@ -1,10 +1,5 @@
-// To parse this JSON data, do
-//
-//     final uploadResponseModel = uploadResponseModelFromMap(jsonString);
-
 import 'package:meta/meta.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'dart:convert';
 
 part 'upload_response_model.freezed.dart';
 part 'upload_response_model.g.dart';
