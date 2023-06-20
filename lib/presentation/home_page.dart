@@ -107,9 +107,8 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                       leading: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                          '${state.data[index].images}',
-                        ),
+                        backgroundImage:
+                            NetworkImage(state.data[index].images![0]),
                       ),
                     ),
                   );
